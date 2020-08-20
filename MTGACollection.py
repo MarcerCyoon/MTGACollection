@@ -49,4 +49,4 @@ for code in set_codes:
 
 for key in sets:
 	percentage = (sets[key]['owned_cards'] / sets[key]['total_cards'])
-	print("Set: {} | {}/{} ({}%)".format(key, sets[key]['owned_cards'], sets[key]['total_cards'], "%0.3f" % percentage))
+	print("Set: {} | {}/{} ({}%)".format(key, sets[key]['owned_cards'], sets[key]['total_cards'], "%0.3f" % (percentage * 100)))
