@@ -26,24 +26,20 @@ with open(file, "r", encoding="utf-8-sig") as log_file:
 
 	collection_data = json.loads(data)
 
-
-set_codes = ["GRN", "RNA", "WAR", "M20", "ELD", "THB", "IKO", "M21", "AKR"]
+set_codes = []
 sets = dict()
-
-for code in set_codes:
-	info = get_set_data(code)
-	sets[code] = {"owned_cards": 5, "total_cards": info['card_count']}
 
 for key, value in collection_data['payload'].items():
 	card = all_mtga_cards.find_one(key)
-	# No need to keep track of basic lands...
-	if card.pretty_name in ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest']:
-		continue
-	else:
-		print("Name: {}, Set: {}, Amount: {}".format(card.pretty_name, card.set, value))
 
-		if card.set.upper() in set_codes:
-			sets[card.set.upper()]['owned_cards'] += 1
+	print("Name: {}, Set: {}, Amount: {}".format(card.pretty_name, card.set, value))
+
+	if card.set.upper() in set_codes:
+		sets[card.set.upper()]['owned_cards'] += 1
+	else:
+		sets[card.set.upper()] = {"owned_cards": 1}
+		set_codes.append(card.set.upper())
+
 
 for key in sets:
 	percentage = (sets[key]['owned_cards'] / sets[key]['total_cards'])
