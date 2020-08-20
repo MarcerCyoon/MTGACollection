@@ -40,6 +40,12 @@ for key, value in collection_data['payload'].items():
 		sets[card.set.upper()] = {"owned_cards": 1}
 		set_codes.append(card.set.upper())
 
+for code in set_codes:
+	if code in ['SCG', 'SOI', 'SHM']:
+			sets[code]['total_cards'] = 1
+	else:
+		info = get_set_data(code)
+		sets[code]['total_cards'] = info['card_count']
 
 for key in sets:
 	percentage = (sets[key]['owned_cards'] / sets[key]['total_cards'])
